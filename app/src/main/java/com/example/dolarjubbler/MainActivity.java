@@ -12,6 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.dolarjubbler.services.DollarService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,31 +36,33 @@ public class MainActivity extends AppCompatActivity {
         btn_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                        Request.Method.GET,
-                        url,
-                        null,
-                        new Response.Listener<JSONObject>() {
-
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    JSONArray jsonArray = response.getJSONArray("");
-                                    for (i=0; i< jsonArray.length(); i++) {
-                                        JSONObject casa = jsonArray.get(i);
-                                        String nombre = casa.getString("nombre");
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                error.printStackTrace();
-                            }
-                        });
+                DollarService ds = new DollarService(MainActivity.this);
+                ds.listValues();
+//                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+//                        Request.Method.GET,
+//                        url,
+//                        null,
+//                        new Response.Listener<JSONObject>() {
+//
+//                            @Override
+//                            public void onResponse(JSONObject response) {
+//                                try {
+//                                    JSONArray jsonArray = response.getJSONArray("");
+//                                    for (int i=0; i< jsonArray.length(); i++) {
+//                                        JSONObject casa = (JSONObject) jsonArray.get(i);
+//                                        String nombre = casa.getString("nombre");
+//                                    }
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        },
+//                        new Response.ErrorListener() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                error.printStackTrace();
+//                            }
+//                        });
             }
         });
 
