@@ -3,20 +3,16 @@ package com.example.dolarjubbler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.dolarjubbler.entities.Dollar;
 import com.example.dolarjubbler.services.DollarService;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Button btn_list, btn_history, btn_date;
@@ -31,58 +27,38 @@ public class MainActivity extends AppCompatActivity {
         btn_history = findViewById(R.id.btn_history);
         btn_date = findViewById(R.id.btn_date);
         listaValores = findViewById(R.id.listarValores);
-        String url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales";
 
         btn_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DollarService ds = new DollarService(MainActivity.this);
-                ds.listValues();
-//                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-//                        Request.Method.GET,
-//                        url,
-//                        null,
-//                        new Response.Listener<JSONObject>() {
-//
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    JSONArray jsonArray = response.getJSONArray("");
-//                                    for (int i=0; i< jsonArray.length(); i++) {
-//                                        JSONObject casa = (JSONObject) jsonArray.get(i);
-//                                        String nombre = casa.getString("nombre");
-//                                    }
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        },
-//                        new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                error.printStackTrace();
-//                            }
-//                        });
+                ds.listValues(new DollarService.ListValuesResponse() {
+                    @Override
+                    public void onError(String message) {
+                        Toast.makeText(MainActivity.this, "Hubo un error", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onResponse(List<Dollar> dollarList) {
+                        ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1,dollarList);
+                        listaValores.setAdapter(arrayAdapter);
+                    }
+                });
             }
         });
 
+        btn_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Funcionando", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-//                Request.Method.GET,
-//                url,
-//                null,
-//                new Response.Listener<JSONObject>() {
-//
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        Log.e("Response: ",response.toString());
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        error.printStackTrace();
-//                    }
-//                });
+        btn_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Funcionando 2", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

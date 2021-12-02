@@ -9,6 +9,15 @@ public class Dollar {
     private String ventaCero;
     private String decimales;
 
+    @Override
+    public String toString() {
+        return nombre + "\n" +"Compra= " + compra + "\t" +"Venta= " + venta + "\n" +
+                "Agencia= " + agencia + "\n" +
+                "Variacion= " + variacion + "\n" +
+                "VentaCero= " + ventaCero + "\n" +
+                "Decimales= " + decimales;
+    }
+
     public Dollar(String nombre, String compra, String venta, String agencia, String variacion, String ventaCero, String decimales) {
         this.nombre = nombre;
         this.compra = compra;
